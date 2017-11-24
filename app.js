@@ -11,12 +11,13 @@ var session = require('express-session');
 var helpers = require('./hbshelpers/helpers');
 
 var db_url = process.env.MONGO_URL;
+var db_name = process.env.MONGO_BIRD_DB_NAME;
 var db_user = process.env.MONGO_BIRD_USER;
 var db_password = process.env.MONGO_BIRD_PASSWORD;
 
 db_url = db_url.replace("{user}", db_user);
 db_url = db_url.replace("{pword}", db_password);
-db_url = db_url.replace("{db}", "sightings");
+db_url = db_url.replace("{db}", db_name);
 
 mongoose.Promise = global.Promise;
 
