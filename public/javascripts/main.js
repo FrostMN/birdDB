@@ -25,7 +25,7 @@ function initMap() {
     var id = _id.value;
 
 
-    var self_url = window.location.href;
+    // var self_url = window.location.href;
 
     // var domain = self_url.split(":")[1];
     // domain = domain.split("//")[1];
