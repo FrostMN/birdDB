@@ -27,12 +27,12 @@ function initMap() {
 
     var self_url = window.location.href;
 
-    var domain = self_url.split(":")[1];
-    domain = domain.split("//")[1];
+    // var domain = self_url.split(":")[1];
+    // domain = domain.split("//")[1];
 
-    var port = self_url.split(":")[2];
+    // var port = self_url.split(":")[2];
 
-    port = port.split("/")[0];
+    // port = port.split("/")[0];
 
     // self_url = self_url.split("//")[1];
     var http = "https://afternoon-dusk-56668.herokuapp.com/bird/" + id + "/sightings"
