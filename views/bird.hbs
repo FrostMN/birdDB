@@ -1,0 +1,97 @@
+<input type="hidden" id="_id" value="{{bird._id}}">
+<h1>{{bird.name}}</h1>
+<button onclick="showModal('delete-bird-modal')">Delete</button>
+<button onclick="showModal('edit-bird-modal')">Edit</button>
+
+<div class="bird-info">
+
+    <h2>Description</h2>
+
+    <p>{{bird.description}}</p>
+
+    <h2>Average Eggs Laid</h2>
+
+    <p>{{bird.averageEggs}}</p>
+
+    <h2>Average Adult Height(CM)</h2>
+
+    <p>{{bird.height}}</p>
+
+    <h2>Conservation Status</h2>
+
+    {{#if bird.endangered}}
+        <p>{{bird.name}} is endangered</p>
+    {{else}}
+        <p>{{bird.name}} is not endangered</p>
+    {{/if}}
+
+    <h2>Nest Information</h2>
+
+    <p>Location: {{bird.nest.location}}</p>
+    <p>Materials: {{bird.nest.materials}}</p>
+
+</div>
+
+<div class="dates-seen">
+    <h2>Dates Seen</h2>
+
+    <h3>Report a new sighting</h3>
+    <form method="POST" action="/addSightings">
+        Sighting Date: <input type="date" name="date">
+        Latitude: <input name="latitude">
+        Longitude: <input name="longitude">
+        <input type="hidden" name="_id" value="{{bird._id}}">
+        <input type="submit" value="Submit">
+    </form>
+
+    <div class="flash-errors">
+        {{#if messages}}
+            <p class="error-messages">{{messages.error}}</p>
+        {{/if}}
+    </div>
+
+    <p>number of sightings {{length bird.sightings}}</p>
+    <div id="map"></div>
+    <div class="sighting-list">
+        {{#each bird.sightings}}
+            <p>{{formatDate this.date}} | Lat: {{formatLatitude this.latitude}}, Long: {{formatLongitude this.longitude}}</p>
+            <script type="text/javascript">
+                printLatLng({{ this.latitude }}, {{this.longitude}})
+            </script>
+
+        {{else}}
+
+        {{/each}}
+    </div>
+</div>
+
+<div id="delete-bird-modal" class="modal">
+    <div class="modal-content">
+        <h1>Are you sure you want to delete?</h1>
+        <h2>{{bird.name}}</h2>
+        <ul>
+            <li>
+                <form action="/deleteBird" method="POST">
+                    <input type="hidden" name="_id" value="{{bird._id}}">
+                    <button>yes</button>
+                </form>
+            </li>
+            <li>
+                <button onclick="closeModal(this)">no</button>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div id="edit-bird-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-content-head">
+            <h1>Edit: {{bird.name}}</h1>
+        </div>
+        <form action="/editBird" method="POST">
+            {{>birdData bird=bird }}
+        </form>
+    </div>
+</div>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ key }}&callback=initMap"></script>

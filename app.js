@@ -4,6 +4,25 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var hbs = require('hbs');
+var mongoose = require('mongoose');
+var flash = require('express-flash');
+var session = require('express-session');
+var helpers = require('./hbshelpers/helpers');
+
+var db_url = process.env.MONGO_URL;
+var db_user = process.env.MONGO_BIRD_USER;
+var db_password = process.env.MONGO_BIRD_PASSWORD;
+
+db_url = db_url.replace("{user}", db_user);
+db_url = db_url.replace("{pword}", db_password);
+db_url = db_url.replace("{db}", "sightings");
+
+mongoose.Promise = global.Promise;
+
+mongoose.connect(db_url, { useMongoClient: true})
+    .then( () => { console.log('connected to MongoDB') } )
+    .catch( (err) => { console.log('error connecting to MongoDB', err); });
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -13,6 +32,11 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
+hbs.registerPartials(__dirname + '/views/partials');
+hbs.registerHelper(helpers);
+
+app.use(session({ secret: 'this is a bas secret', resave: false, saveUninitialized: false}));
+app.use(flash());
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -37,6 +61,10 @@ app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
+
+  if (err.kind === 'ObjectID' && err.name == 'CastError') {
+      err.status = 404;
+  }
 
   // render the error page
   res.status(err.status || 500);

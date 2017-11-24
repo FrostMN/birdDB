@@ -1,0 +1,18 @@
+<p>
+{{#if bird._id}}
+<input type="hidden" name="_id" value="{{bird._id}}">
+{{/if}}
+Name: <input name="name" value="{{bird.name}}"/>
+<br>Description: <input name="description" value="{{bird.description}}" />
+<br>Average Eggs: <input name="averageEggs" value="{{bird.averageEggs}}" />
+<br>Height: <input name="height" value="{{bird.height}}" />
+{{#if bird.endangered}}
+<br>Endangered? <input type="checkbox" name="endangered" checked />
+{{else}}
+<br>Endangered? <input type="checkbox" name="endangered" />
+{{/if}}
+<br>Nest location: <input name="nestLocation" value="{{bird.nest.location}}" />
+<br>Nest mateials: <input name="nestMaterials" value="{{bird.nest.materials}}" />
+<br><input type="submit" value="Submit">
+<button type="button" onclick="closeModal(this)">Cancel</button>
+</p>

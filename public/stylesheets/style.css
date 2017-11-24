@@ -1,8 +1,70 @@
+:root {
+    --modal-bg: rgba(255,255,255,0.5);  /* var(--modal-bg)              */
+    --shadow-color: rgba(0,0,0,0.2);    /* var(--shadow-color)          */
+    --link-color: #00B7FF;              /* var(--link-color)            */
+    --text: #121212;                    /* var(--text)                  */
+}
+
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
-  color: #00B7FF;
+  color: var(--link-color);
 }
+
+#map {
+    width: 100%;
+    height: 400px;
+    background-color: grey;
+}
+
+.modal {
+    display: none;
+    position:fixed;
+    padding:0;
+    margin:0;
+
+    top:0;
+    left:0;
+
+    width: 100%;
+    height: 100%;
+    background: var(--modal-bg);
+    text-align: center;
+
+    z-index: 1000;
+}
+
+.modal-content {
+    position: absolute;
+    top: 3em;
+    left: 3em;
+    right: 3em;
+    width: 30em;
+    /*display: inline-block;*/
+    background-color: white;
+    border: 1px solid black;
+    z-index: 120;
+    margin: 3em auto;
+    padding-bottom: 1em;
+}
+
+.modal-content-head {
+    text-align: center;
+    padding-bottom: .3em;
+    margin-bottom: 1em;
+    border-bottom: 1px solid black;
+}
+
+.modal-content-body {
+    padding-left: 3em;
+    padding-right: 3em;
+}
+
+.modal-content-body li {
+    display: inline-block;
+    text-decoration: none;
+}
+

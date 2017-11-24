@@ -1,2 +1,37 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<h1>Bird Sightings</h1>
+<button onclick="showModal('new-bird-modal')">Add Bird</button>
+
+<div id="new-bird-modal" class="modal">
+    <div class="modal-content">
+        <div class="modal-content-head">
+            <h2>Add a new Bird</h2>
+        </div>
+        <div class="modal-content-body">
+            <form method="POST" action="/addBird">
+                {{>birdData}}
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="flash-errors">
+    {{#if messages}}
+        <p class="error-message">{{messages.error}}</p>
+    {{/if}}
+</div>
+
+<div class="bird-name-list">
+    <h2>Bird List</h2>
+
+    <div class="bird-summary">
+
+        {{#each birds}}
+            <h3>{{this.name}}</h3>
+            <p>{{this.description}}</p>
+            <p><a href="/bird/{{this._id}}">{{this.name}} info and sightings</a></p>
+        {{else}}
+            <p>no birds in db</p>
+        {{/each}}
+
+    </div>
+</div>
