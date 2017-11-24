@@ -35,7 +35,7 @@ function initMap() {
     port = port.split("/")[0];
 
     // self_url = self_url.split("//")[1];
-    var http = "http://" + domain + ":" + port + "/bird/" + id + "/sightings"
+    var http = "https://afternoon-dusk-56668.herokuapp.com/bird/" + id + "/sightings"
 
     httpGetAsync(http, function (text) {
         text = text.replace(/&quot;/g, "\"");
